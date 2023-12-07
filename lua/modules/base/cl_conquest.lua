@@ -1,6 +1,6 @@
 -- Create original font
 local font = "Montserrat"
-local fontSize = conquest.fontSize or 20
+local fontSize = conquest.hudFontSize
 surface.CreateFont(
     font,
     {
@@ -12,7 +12,7 @@ surface.CreateFont(
 
 -- Create larger font
 local largeFont = "MontserratLarge"
-local largeFontSize = fontSize * 1.5
+local largeFontSize = conquest.notifyFontSize
 surface.CreateFont(
     largeFont,
     {
@@ -23,10 +23,7 @@ surface.CreateFont(
 )
 
 -- HUDPaint hook for leveling system and experience gain notification
-
 local notifications = {}
-
-
 hook.Add(
     "HUDPaint",
     "HUDPaint_LevelingSystem",
@@ -59,7 +56,7 @@ hook.Add(
         -- Get current progress
         local currentProgress = player:GetNWFloat("ConquestProgress", 0)
         -- Define smoothing factor
-        local smoothingFactor = 0.005
+        local smoothingFactor = conquest.smoothingAmount
         -- Smoothly interpolate between current progress and target progress
         local smoothedProgress = Lerp(smoothingFactor, currentProgress, targetProgress)
         -- Set smoothed progress
@@ -90,7 +87,15 @@ net.Receive(
             notification.AddLegacy("You gained " .. amount .. " " .. typeText, NOTIFY_HINT, conquest.notifyLifeTime)
         else
             local text = type == "exp" and "+" .. amount .. " XP" or "Level Up"
-            table.insert(notifications, 1, {text = text, start = SysTime(), lifetime = conquest.notifyLifeTime})
+            table.insert(
+                notifications,
+                1,
+                {
+                    text = text,
+                    start = SysTime(),
+                    lifetime = conquest.notifyLifeTime
+                }
+            )
         end
     end
 )
