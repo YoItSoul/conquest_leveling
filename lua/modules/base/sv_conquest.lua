@@ -108,7 +108,9 @@ end
 local function AddLevel(ply, amount)
     local oldlevel = ply:GetNWInt("ConquestLevel")
     ply:SetNWInt("ConquestLevel", math.min(oldlevel + amount, conquest.maxLevel))
-    NotifyPlayerGain(ply, amount, "level")
+    if conquest.notify then
+        NotifyPlayerGain(ply, amount, "level")
+    end
 end
 
 local function AddExp(ply, amount)

@@ -1,0 +1,12 @@
+If you have a pre-packaged module produced by Soul, you can simply drop it into this folder.
+
+The "Modules" folder is what is loaded by the exp system base, and is also where you should make
+custom modules if that is your plan. Custom modules MUST FOLLOW THE TEMPLATE BELOW.
+
+"sv_" must be the start of any server files
+"sh_" must be the start of any shared files
+"cl_" must be the start of any client files
+Eg. "cl_conquest", "sh_conquest_config", and "sv_conquest" found in the base module.
+
+If they do not contain the examples above, the files will not be loaded in correctly
+and your module may not show up in-game as a conquest module.
